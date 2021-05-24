@@ -1,0 +1,9 @@
+style:
+  active: true
+  MaxLineLength:
+    active: false
+  ForbiddenComment:
+    active: false
+naming:
+  PackageNaming:
+    active: false
