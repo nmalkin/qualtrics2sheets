@@ -1,8 +1,7 @@
 package q2s.qualtrics
 
 class QualtricsURL(private val datacenter: QualtricsDatacenter) {
-    val GET_TOKEN_URL = "https://$datacenter.qualtrics.com/oauth2/token"
-    val WHOAMI_URL = "https://$datacenter.qualtrics.com/API/v3/whoami"
+    val whoAmI = "https://$datacenter.qualtrics.com/API/v3/whoami"
 
     /**
      * https://api.qualtrics.com/guides/reference/responseImportsExports.json/paths/~1surveys~1%7BsurveyId%7D~1export-responses/post

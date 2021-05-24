@@ -18,7 +18,7 @@ suspend fun checkApiToken(datacenter: QualtricsDatacenter, apiToken: String) {
     logger.debug { "checking validity of Qualtrics API token" }
     val client = HttpClient(Java)
 
-    val url = QualtricsURL(datacenter).WHOAMI_URL
+    val url = QualtricsURL(datacenter).whoAmI
     logger.debug { "making request to $url" }
     val response: HttpResponse = client.request(url) {
         method = HttpMethod.Get
