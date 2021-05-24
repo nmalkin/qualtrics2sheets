@@ -1,13 +1,14 @@
 package q2s.sheets
 
 import kotlinx.cli.ArgType
+import kotlinx.cli.ExperimentalCli
 import kotlinx.cli.Subcommand
 import kotlinx.cli.default
 import kotlinx.cli.required
 import q2s.subcommandFinished
 import q2s.util.toPath
 
-// @OptIn(ExperimentalCli::class)
+@ExperimentalCli
 class UploadCSVCommand : Subcommand("upload_csv", "(only) upload a CSV file") {
     val credentials by option(
         ArgType.String,

@@ -1,12 +1,14 @@
 package q2s.qualtrics
 
 import kotlinx.cli.ArgType
+import kotlinx.cli.ExperimentalCli
 import kotlinx.cli.Subcommand
 import kotlinx.cli.required
 import kotlinx.coroutines.runBlocking
 import q2s.subcommandFinished
 import q2s.util.toPath
 
+@ExperimentalCli
 class DownloadQualtricsCommand : Subcommand("download_qualtrics", "download a Qualtrics export") {
     val datacenter by option(
         ArgType.String,

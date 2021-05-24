@@ -1,6 +1,7 @@
 package q2s
 
 import kotlinx.cli.ArgType
+import kotlinx.cli.ExperimentalCli
 import kotlinx.cli.Subcommand
 import kotlinx.cli.default
 import kotlinx.cli.required
@@ -21,6 +22,7 @@ import kotlin.io.path.extension
 
 private val logger = KotlinLogging.logger { }
 
+@ExperimentalCli
 class ExportAndUploadCommand : Subcommand("run", "download a Qualtrics export and immediately upload it to Sheets") {
     val debug by option(
         ArgType.Boolean,

@@ -1,6 +1,7 @@
 package q2s
 
 import kotlinx.cli.ArgParser
+import kotlinx.cli.ExperimentalCli
 import logging.KotlinLogging
 import q2s.qualtrics.DownloadQualtricsCommand
 import q2s.sheets.UploadCSVCommand
@@ -11,7 +12,7 @@ private val logger = KotlinLogging.logger { }
 
 var subcommandFinished = false
 
-// @OptIn(ExperimentalCli::class)
+@ExperimentalCli
 fun main(args: Array<String>) {
     val parser = ArgParser(PROGRAM_NAME)
     parser.subcommands(ExportAndUploadCommand(), UploadCSVCommand(), DownloadQualtricsCommand())
