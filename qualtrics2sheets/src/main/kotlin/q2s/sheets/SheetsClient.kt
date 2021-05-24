@@ -20,7 +20,16 @@ import kotlin.io.path.bufferedReader
 import kotlin.io.path.exists
 
 const val APPLICATION_NAME = PROGRAM_NAME
+
+/**
+ * Path to the directory where to store authentication tokens
+ */
 const val TOKENS_DIRECTORY_PATH = "tokens"
+
+/**
+ * Port number for OAuth server where the redirect will be received after authorization
+ */
+const val OAUTH_SERVER_PORT = 18800
 
 class SheetsClient(
     private val credentialsFilePath: Path
@@ -52,7 +61,7 @@ class SheetsClient(
             .setDataStoreFactory(FileDataStoreFactory(File(tokensDirectoryPath)))
             .setAccessType("offline")
             .build()
-        val receiver = LocalServerReceiver.Builder().setPort(8888).build()
+        val receiver = LocalServerReceiver.Builder().setPort(OAUTH_SERVER_PORT).build()
         return AuthorizationCodeInstalledApp(flow, receiver).authorize(userId)
     }
 
