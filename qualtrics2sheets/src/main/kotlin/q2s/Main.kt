@@ -26,6 +26,6 @@ fun main(args: Array<String>) {
     }
 
     if (!subcommandFinished) {
-        System.err.println("--help or -h for usage")
+        System.err.println("Welcome to $PROGRAM_NAME!\nThis program has several different subcommands.\nRe-run this command, appending --help or -h, to show usage information.")
     }
 }
