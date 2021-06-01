@@ -33,7 +33,14 @@ suspend fun startExport(client: HttpClient, urls: QualtricsURL, apiToken: String
             append("X-API-TOKEN", apiToken)
         }
         contentType(ContentType.Application.Json)
-        val payload = mapOf("format" to "csv")
+        val payload = mapOf(
+            "format" to "csv",
+            /*
+            For columns that have answer labels, export two columns: one that uses recode values and one that uses labels. The label column has an IsLabelsColumn field in the 3rd header row. Note that this cannot be used with useLabels. Use this setting if you wish to export both column labels and numberic values in the same export.
+            - from https://api.qualtrics.com/guides/reference/responseImportsExports.json/paths/~1surveys~1%7BsurveyId%7D~1export-responses/post
+             */
+            "includeLabelColumns" to "true",
+        )
         body = Json.encodeToString(payload)
     }
     val text = response.readText()
