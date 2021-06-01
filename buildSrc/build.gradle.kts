@@ -1,10 +1,10 @@
 val versions = mapOf(
-    "kotlin" to "1.5.0"
+    "kotlin" to "1.5.10"
 )
 
 plugins {
     `kotlin-dsl`
-    kotlin("jvm") version "1.5.0"
+    kotlin("jvm") version "1.5.10"
 }
 
 repositories {
