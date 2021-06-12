@@ -13,6 +13,7 @@ import q2s.qualtrics.QualtricsDatacenter
 import q2s.qualtrics.checkApiToken
 import q2s.qualtrics.downloadSurvey
 import q2s.sheets.SheetsClient
+import q2s.sheets.TOKENS_DIRECTORY_PATH
 import q2s.sheets.uploadCSV
 import q2s.util.toPath
 import java.nio.file.Files
@@ -60,6 +61,11 @@ class ExportAndUploadCommand : Subcommand("run", "download a Qualtrics export an
         fullName = "spreadsheet",
         description = "the ID of the target spreadsheet",
     ).required()
+    val tokensDirectory by option(
+        ArgType.String,
+        fullName = "tokens-directory",
+        description = "directory for storing (and subsequently reading) the Sheets tokens",
+    ).default(TOKENS_DIRECTORY_PATH)
 
     override fun execute() {
         DEFAULT_LOG_LEVEL = if (debug == true) LogLevel.DEBUG else LogLevel.INFO
@@ -86,7 +92,8 @@ class ExportAndUploadCommand : Subcommand("run", "download a Qualtrics export an
 
         logger.debug { "determined the exported CSV file to be $csvFile" }
 
-        val client = SheetsClient(credentials.toPath()).getClient()
+        val tokensDirectoryPath = tokensDirectory.toPath().toFile()
+        val client = SheetsClient(credentials.toPath(), tokensDirectoryPath).getClient()
         uploadCSV(client, spreadsheetID, csvFile)
 
         logger.debug { "*not* cleaning up temporary directory $tmpDirectory" }

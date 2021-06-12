@@ -28,9 +28,15 @@ class UploadCSVCommand : Subcommand("upload_csv", "(only) upload a CSV file") {
         shortName = "f",
         description = "the path to the CSV file to upload"
     ).required()
+    val tokensDirectory by option(
+        ArgType.String,
+        fullName = "tokens-directory",
+        description = "directory for storing (and subsequently reading) the Sheets tokens",
+    ).default(TOKENS_DIRECTORY_PATH)
 
     override fun execute() {
-        val client = SheetsClient(credentials.toPath()).getClient()
+        val tokensDirectoryPath = tokensDirectory.toPath().toFile()
+        val client = SheetsClient(credentials.toPath(), tokensDirectoryPath).getClient()
         uploadCSV(client, spreadsheetID, csvFile.toPath())
 
         subcommandFinished = true

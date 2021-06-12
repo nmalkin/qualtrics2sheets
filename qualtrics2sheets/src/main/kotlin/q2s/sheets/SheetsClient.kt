@@ -32,11 +32,11 @@ const val TOKENS_DIRECTORY_PATH = "tokens"
 const val OAUTH_SERVER_PORT = 18800
 
 class SheetsClient(
-    private val credentialsFilePath: Path
+    private val credentialsFilePath: Path,
+    private val tokensDirectory: File = File(TOKENS_DIRECTORY_PATH),
 ) {
     private val applicationName: String = APPLICATION_NAME
     private val jsonFactory: JsonFactory = GsonFactory.getDefaultInstance()
-    private val tokensDirectoryPath = TOKENS_DIRECTORY_PATH
     private val userId = "user"
 
     /**
@@ -58,7 +58,7 @@ class SheetsClient(
         val flow = GoogleAuthorizationCodeFlow.Builder(
             httpTransport, jsonFactory, clientSecrets, scopes
         )
-            .setDataStoreFactory(FileDataStoreFactory(File(tokensDirectoryPath)))
+            .setDataStoreFactory(FileDataStoreFactory(tokensDirectory))
             .setAccessType("offline")
             .build()
         val receiver = LocalServerReceiver.Builder().setPort(OAUTH_SERVER_PORT).build()
