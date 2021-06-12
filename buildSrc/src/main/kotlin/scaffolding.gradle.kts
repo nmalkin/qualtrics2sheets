@@ -10,27 +10,21 @@ plugins {
 
 repositories {
     mavenCentral()
-    // maven {
-    //     url = uri("https://kotlin.bintray.com/kotlinx")
-    // }
 }
 
 
 dependencies {
-    // runtimeOnly("org.jetbrains.kotlin:kotlin-reflect:1.5.0-RC") // only needed for the RC
-
     // JUnit
     testImplementation(kotlin("test-junit5"))
-//    testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.0")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.2")
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_15
+    sourceCompatibility = JavaVersion.VERSION_11
 }
 
 tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "15"
+    kotlinOptions.jvmTarget = "11"
 }
 
 tasks.test {
