@@ -60,6 +60,7 @@ Once you have the credentials file, save it somewhere on disk; you'll pass its l
 
 The first time you run `qualtrics2sheets`, it will need to use those credentials to obtain an authentication token (which is what's actually used to interact with the API).
 To do this, it will open a new browser window, where you'll be asked to authorize the application you created in the Cloud Console with access to Sheets.
+The resulting authentication token will be stored in the `tokens` directory in your current working directory. (You can change this location using the `--tokens-directory` flag.)
 
 
 Usage
