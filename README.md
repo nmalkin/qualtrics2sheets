@@ -28,7 +28,7 @@ Installation
 ------------
 
 ### Prerequisites
-To run this program, you need Java 15 or later on your system.
+To run this program, you need Java 11 or later on your system.
 (It should be possible to recompile the program for older versions of Java as well.)
 
 ### Obtain the program
