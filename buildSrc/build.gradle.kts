@@ -1,10 +1,6 @@
-val versions = mapOf(
-    "kotlin" to "1.5.10"
-)
-
 plugins {
     `kotlin-dsl`
-    kotlin("jvm") version "1.5.10"
+    kotlin("jvm") version "1.5.31"
 }
 
 repositories {
@@ -12,9 +8,10 @@ repositories {
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:${versions["kotlin"]}")
-    implementation("org.jlleitschuh.gradle:ktlint-gradle:10.0.0")
-    implementation("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.17.1")
-    implementation("com.github.ben-manes:gradle-versions-plugin:0.38.0")
+    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.31")
+    implementation("org.jlleitschuh.gradle:ktlint-gradle:10.2.0")
+    implementation("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.18.1")
+    implementation("com.github.ben-manes:gradle-versions-plugin:0.39.0")
+    implementation("com.github.johnrengelman.shadow:com.github.johnrengelman.shadow.gradle.plugin:7.1.0")
 }
 

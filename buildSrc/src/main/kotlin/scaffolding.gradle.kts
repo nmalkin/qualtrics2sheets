@@ -16,7 +16,7 @@ repositories {
 dependencies {
     // JUnit
     testImplementation(kotlin("test-junit5"))
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.2")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.1")
 }
 
 java {
@@ -33,7 +33,7 @@ tasks.test {
 
 
 ktlint {
-    version.set("0.41.0")
+    version.set("0.43.0")
 
     filter {
         exclude("build/**")
@@ -47,7 +47,7 @@ ktlint {
 }
 
 detekt {
-    toolVersion = "1.17.1"
+    toolVersion = "1.18.1"
     config = files("${rootDir}/detekt.yml")
     buildUponDefaultConfig = true
 }
