@@ -6,6 +6,7 @@ plugins {
     id("org.jlleitschuh.gradle.ktlint")
     id("io.gitlab.arturbosch.detekt")
     id("com.github.ben-manes.versions")
+    id("com.github.johnrengelman.shadow")
 }
 
 repositories {
