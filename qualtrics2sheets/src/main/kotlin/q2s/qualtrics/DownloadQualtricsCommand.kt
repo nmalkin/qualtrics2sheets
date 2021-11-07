@@ -3,9 +3,11 @@ package q2s.qualtrics
 import kotlinx.cli.ArgType
 import kotlinx.cli.ExperimentalCli
 import kotlinx.cli.Subcommand
+import kotlinx.cli.default
 import kotlinx.cli.required
 import kotlinx.coroutines.runBlocking
 import q2s.subcommandFinished
+import q2s.util.FileExistsStrategy
 import q2s.util.toPath
 
 @ExperimentalCli
@@ -34,13 +36,18 @@ class DownloadQualtricsCommand : Subcommand("download_qualtrics", "download a Qu
         shortName = "o",
         description = "target directory where to put the downloaded CSV"
     ).required()
+    val ifExists by option(
+        ArgType.Choice<FileExistsStrategy>(),
+        fullName = "if-exists",
+        description = "what to do if the target file exists"
+    ).default(FileExistsStrategy.ABORT)
 
     override fun execute() {
         val targetPath = targetDirectory.toPath()
 
         runBlocking {
             checkApiToken(QualtricsDatacenter(datacenter), apiToken)
-            downloadSurvey(QualtricsDatacenter(datacenter), apiToken, surveyID, targetPath)
+            downloadSurvey(QualtricsDatacenter(datacenter), apiToken, surveyID, targetPath, ifExists)
         }
 
         subcommandFinished = true

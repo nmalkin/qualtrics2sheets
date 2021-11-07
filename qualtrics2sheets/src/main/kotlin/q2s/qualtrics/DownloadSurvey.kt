@@ -16,6 +16,7 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 import logging.KotlinLogging
+import q2s.util.FileExistsStrategy
 import q2s.util.unzip
 import java.io.InputStream
 import java.nio.file.Path
@@ -53,7 +54,13 @@ suspend fun startExport(client: HttpClient, urls: QualtricsURL, apiToken: String
     return progressID
 }
 
-suspend fun downloadSurvey(datacenter: QualtricsDatacenter, apiToken: String, surveyID: String, targetDirectory: Path) {
+suspend fun downloadSurvey(
+    datacenter: QualtricsDatacenter,
+    apiToken: String,
+    surveyID: String,
+    targetDirectory: Path,
+    fileExistsStrategy: FileExistsStrategy
+) {
     val client = HttpClient(Java)
 
     val urls = QualtricsURL(datacenter)
@@ -89,10 +96,18 @@ suspend fun downloadSurvey(datacenter: QualtricsDatacenter, apiToken: String, su
         throw QualtricsException("Qualtrics export complete but fileId is null")
     }
 
-    downloadExport(client, urls, apiToken, surveyID, fileID, targetDirectory)
+    downloadExport(client, urls, apiToken, surveyID, fileID, targetDirectory, fileExistsStrategy)
 }
 
-suspend fun downloadExport(client: HttpClient, urls: QualtricsURL, apiToken: String, surveyID: String, fileID: String, targetDirectory: Path) {
+suspend fun downloadExport(
+    client: HttpClient,
+    urls: QualtricsURL,
+    apiToken: String,
+    surveyID: String,
+    fileID: String,
+    targetDirectory: Path,
+    fileExistsStrategy: FileExistsStrategy
+) {
     logger.debug { "downloading result from ${urls.getExportFile(surveyID, fileID)}" }
 
     val downloadResponse: HttpResponse = client.request(urls.getExportFile(surveyID, fileID)) {
@@ -104,5 +119,5 @@ suspend fun downloadExport(client: HttpClient, urls: QualtricsURL, apiToken: Str
     val content = downloadResponse.receive<InputStream>()
 
     logger.debug { "unzipping $surveyID export to $targetDirectory" }
-    unzip(content, targetDirectory)
+    unzip(content, targetDirectory, fileExistsStrategy)
 }

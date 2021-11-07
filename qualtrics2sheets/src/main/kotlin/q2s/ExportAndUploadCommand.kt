@@ -15,6 +15,7 @@ import q2s.qualtrics.downloadSurvey
 import q2s.sheets.SheetsClient
 import q2s.sheets.TOKENS_DIRECTORY_PATH
 import q2s.sheets.uploadCSV
+import q2s.util.FileExistsStrategy
 import q2s.util.toPath
 import java.nio.file.Files
 import java.nio.file.Path
@@ -75,7 +76,7 @@ class ExportAndUploadCommand : Subcommand("run", "download a Qualtrics export an
 
         runBlocking {
             checkApiToken(QualtricsDatacenter(datacenter), apiToken)
-            downloadSurvey(QualtricsDatacenter(datacenter), apiToken, surveyID, tmpDirectory)
+            downloadSurvey(QualtricsDatacenter(datacenter), apiToken, surveyID, tmpDirectory, FileExistsStrategy.ABORT)
         }
 
         var csvFile: Path? = null
