@@ -16,6 +16,7 @@ import q2s.sheets.SheetsClient
 import q2s.sheets.TOKENS_DIRECTORY_PATH
 import q2s.sheets.uploadCSV
 import q2s.util.FileExistsStrategy
+import q2s.util.makeCopyOfCSV
 import q2s.util.toPath
 import java.nio.file.Files
 import java.nio.file.Path
@@ -49,6 +50,16 @@ class ExportAndUploadCommand : Subcommand("run", "download a Qualtrics export an
         fullName = "survey",
         description = "Qualtrics survey ID"
     ).required()
+    val saveExportDirectory by option(
+        ArgType.String,
+        fullName = "export-path",
+        description = "if specified, the Qualtrics CSV will be extracted to the given directory. Otherwise, a temporary file system directory is used."
+    )
+    val ifExists by option(
+        ArgType.Choice<FileExistsStrategy>(),
+        fullName = "if-exists",
+        description = "what to do if the target file exists (only applicable if --export-path is specified)"
+    ).default(FileExistsStrategy.ABORT)
 
     /* Sheets parameters */
     val credentials by option(
@@ -92,6 +103,10 @@ class ExportAndUploadCommand : Subcommand("run", "download a Qualtrics export an
         }
 
         logger.debug { "determined the exported CSV file to be $csvFile" }
+
+        if (saveExportDirectory != null) {
+            makeCopyOfCSV(csvFile, saveExportDirectory!!, ifExists)
+        }
 
         val tokensDirectoryPath = tokensDirectory.toPath().toFile()
         val client = SheetsClient(credentials.toPath(), tokensDirectoryPath).getClient()
