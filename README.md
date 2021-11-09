@@ -45,6 +45,7 @@ You can make it executable (`chmod u+x qualtrics2sheets`) and even put it somewh
 Setup
 -----
 Before you run the program, you'll need to get the proper credentials for the respective APIs.
+You'll only have to perform these steps once.
 
 ### Qualtrics
 You'll need your Qualtrics API token, which you can obtain by following
@@ -53,10 +54,15 @@ You'll need your Qualtrics API token, which you can obtain by following
 Once you have it, you'll pass it to `qualtrics2sheets` using the `--token` flag.
 
 ### Google Sheets
-You'll need a Google Cloud credentials file, which you can obtain by following
-[Google's documentation here](https://developers.google.com/workspace/guides/create-credentials#desktop).
-Note that you'll want to create a new project in the Cloud Console before generating the new credentials.
-Once you have the credentials file, save it somewhere on disk; you'll pass its location to `qualtrics2sheets` using the `--credentials` flag.
+You'll need a Google Cloud credentials file. (When this was last updated) the steps to do this are:
+
+1. Create a new project in [Google Cloud Console](https://console.cloud.google.com/)
+2. [Enable the Google Sheets API](https://console.cloud.google.com/apis/library/sheets.googleapis.com) for this project
+3. [Configure the consent screen](https://developers.google.com/workspace/guides/create-credentials#configure_the_oauth_consent_screen) for an _Internal_ app
+4. [Create an OAuth client ID credential](https://developers.google.com/workspace/guides/create-credentials#create_a_oauth_client_id_credential)
+5. [Download the JSON file with the newly-created credential](https://developers.google.com/workspace/guides/create-credentials#desktop)
+6. Once you have the credentials file, save it somewhere on disk
+7. Pass its location to `qualtrics2sheets` using the `--credentials` flag.
 
 The first time you run `qualtrics2sheets`, it will need to use those credentials to obtain an authentication token (which is what's actually used to interact with the API).
 To do this, it will open a new browser window, where you'll be asked to authorize the application you created in the Cloud Console with access to Sheets.
@@ -72,7 +78,12 @@ Make sure you're not losing any data.
 Here is a sample of how to run the program.
 (Remember that if you're using the JAR file, you'd instead run `java -jar qualtrics2sheets.jar run ...`)
 
-    qualtrics2sheets run --datacenter ca1 --token $QUALTRICS_TOKEN --credentials /path/to/credentials.json --spreadsheet 1xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx --survey SV_xxxxxxxxxxxxxxx
+    qualtrics2sheets run  \
+      --datacenter ca1  \
+      --token $QUALTRICS_TOKEN  \
+      --credentials /path/to/credentials.json  \
+      --spreadsheet 1xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  \
+      --survey SV_xxxxxxxxxxxxxxx
 
 - `--datacenter` is your account's Qualtrics datacenter, [see the documentation here](https://api.qualtrics.com/guides/docs/Instructions/base-url-and-datacenter-ids.md)
 - `--spreadsheet` is the ID of your spreadsheet (you can get it from its URL)  
