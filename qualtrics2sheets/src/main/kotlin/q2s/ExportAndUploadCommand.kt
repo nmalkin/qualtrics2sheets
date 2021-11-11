@@ -4,6 +4,7 @@ import kotlinx.cli.ArgType
 import kotlinx.cli.ExperimentalCli
 import kotlinx.cli.Subcommand
 import kotlinx.cli.default
+import kotlinx.cli.multiple
 import kotlinx.cli.required
 import kotlinx.coroutines.runBlocking
 import logging.DEFAULT_LOG_LEVEL
@@ -78,6 +79,12 @@ class ExportAndUploadCommand : Subcommand("run", "download a Qualtrics export an
         fullName = "tokens-directory",
         description = "directory for storing (and subsequently reading) the Sheets tokens",
     ).default(TOKENS_DIRECTORY_PATH)
+    val columnsToExclude by option(
+        ArgType.String,
+        fullName = "exclude-column",
+        shortName = "e",
+        description = "name of column to exclude from upload (repeat for each column)",
+    ).multiple()
 
     override fun execute() {
         DEFAULT_LOG_LEVEL = if (debug == true) LogLevel.DEBUG else LogLevel.INFO
@@ -110,7 +117,7 @@ class ExportAndUploadCommand : Subcommand("run", "download a Qualtrics export an
 
         val tokensDirectoryPath = tokensDirectory.toPath().toFile()
         val client = SheetsClient(credentials.toPath(), tokensDirectoryPath).getClient()
-        uploadCSV(client, spreadsheetID, csvFile)
+        uploadCSV(client, spreadsheetID, csvFile, columnsToExclude)
 
         logger.debug { "*not* cleaning up temporary directory $tmpDirectory" }
 

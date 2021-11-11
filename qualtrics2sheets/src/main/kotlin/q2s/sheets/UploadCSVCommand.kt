@@ -4,6 +4,7 @@ import kotlinx.cli.ArgType
 import kotlinx.cli.ExperimentalCli
 import kotlinx.cli.Subcommand
 import kotlinx.cli.default
+import kotlinx.cli.multiple
 import kotlinx.cli.required
 import q2s.subcommandFinished
 import q2s.util.toPath
@@ -33,11 +34,17 @@ class UploadCSVCommand : Subcommand("upload_csv", "(only) upload a CSV file") {
         fullName = "tokens-directory",
         description = "directory for storing (and subsequently reading) the Sheets tokens",
     ).default(TOKENS_DIRECTORY_PATH)
+    val columnsToExclude by option(
+        ArgType.String,
+        fullName = "exclude-column",
+        shortName = "e",
+        description = "name of column to exclude from upload (repeat for each column)",
+    ).multiple()
 
     override fun execute() {
         val tokensDirectoryPath = tokensDirectory.toPath().toFile()
         val client = SheetsClient(credentials.toPath(), tokensDirectoryPath).getClient()
-        uploadCSV(client, spreadsheetID, csvFile.toPath())
+        uploadCSV(client, spreadsheetID, csvFile.toPath(), columnsToExclude)
 
         subcommandFinished = true
     }

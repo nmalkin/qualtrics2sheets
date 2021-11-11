@@ -15,8 +15,12 @@ private fun getFirstSheetName(client: Sheets, sheetID: String): String {
     return firstSheet.properties.title
 }
 
-fun uploadCSV(client: Sheets, sheetID: String, csvFilePath: Path) {
-    val csvContent = readCSV(csvFilePath)
+fun uploadCSV(client: Sheets, sheetID: String, csvFilePath: Path, columnsToExclude: List<String>) {
+    val csvContent = if (columnsToExclude.isEmpty())
+        readCSV(csvFilePath)
+    else
+        readAndFilterCSV(csvFilePath, columnsToExclude.toSet())
+
     val newBody = ValueRange().setValues(csvContent)
 
     val range = getFirstSheetName(client, sheetID)
