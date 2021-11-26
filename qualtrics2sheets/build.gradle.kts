@@ -25,7 +25,7 @@ application {
 //     archiveClassifier.set("server")
 // }
 
-val ktorVersion = "1.6.5"
+val ktorVersion = "1.6.6"
 
 dependencies {
     implementation(project(":logging"))
@@ -38,6 +38,6 @@ dependencies {
     implementation("io.ktor:ktor-client-java:$ktorVersion")
     implementation("io.ktor:ktor-client-auth:$ktorVersion")
     // implementation("io.ktor:ktor-client-gson:$ktorVersion")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.3.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.3.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.1")
 }
