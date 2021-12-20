@@ -58,9 +58,9 @@ You'll need a Google Cloud credentials file. (When this was last updated) the st
 
 1. Create a new project in [Google Cloud Console](https://console.cloud.google.com/)
 2. [Enable the Google Sheets API](https://console.cloud.google.com/apis/library/sheets.googleapis.com) for this project
-3. [Configure the consent screen](https://developers.google.com/workspace/guides/create-credentials#configure_the_oauth_consent_screen) for an _Internal_ app
-4. [Create an OAuth client ID credential](https://developers.google.com/workspace/guides/create-credentials#create_a_oauth_client_id_credential)
-5. [Download the JSON file with the newly-created credential](https://developers.google.com/workspace/guides/create-credentials#desktop)
+3. [Configure the consent screen](https://developers.google.com/workspace/guides/configure-oauth-consent) for an _Internal_ app
+4. [Create an OAuth client ID credential](https://developers.google.com/workspace/guides/create-credentials#oauth-client-id)
+5. [Download the JSON file with the newly-created credential](https://developers.google.com/workspace/guides/create-credentials#desktop-app)
 6. Once you have the credentials file, save it somewhere on disk
 7. Pass its location to `qualtrics2sheets` using the `--credentials` flag.
 
