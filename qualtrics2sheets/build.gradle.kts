@@ -25,11 +25,11 @@ application {
 //     archiveClassifier.set("server")
 // }
 
-val ktorVersion = "1.6.6"
+val ktorVersion = "1.6.7"
 
 dependencies {
     implementation(project(":logging"))
-    implementation("org.jetbrains.kotlinx:kotlinx-cli:0.3.3")
+    implementation("org.jetbrains.kotlinx:kotlinx-cli:0.3.4")
     implementation("org.apache.commons:commons-csv:1.9.0")
     implementation("com.google.api-client:google-api-client:1.32.2")
     implementation("com.google.oauth-client:google-oauth-client-jetty:1.32.1")
