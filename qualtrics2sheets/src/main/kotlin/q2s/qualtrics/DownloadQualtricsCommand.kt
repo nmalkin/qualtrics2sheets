@@ -36,6 +36,11 @@ class DownloadQualtricsCommand : Subcommand("download_qualtrics", "download a Qu
         shortName = "o",
         description = "target directory where to put the downloaded CSV"
     ).required()
+    val outputFilename by option(
+        ArgType.String,
+        fullName = "filename",
+        description = "filename to use for the extracted CSV"
+    )
     val ifExists by option(
         ArgType.Choice<FileExistsStrategy>(),
         fullName = "if-exists",
@@ -47,7 +52,7 @@ class DownloadQualtricsCommand : Subcommand("download_qualtrics", "download a Qu
 
         runBlocking {
             checkApiToken(QualtricsDatacenter(datacenter), apiToken)
-            downloadSurvey(QualtricsDatacenter(datacenter), apiToken, surveyID, targetPath, ifExists)
+            downloadSurvey(QualtricsDatacenter(datacenter), apiToken, surveyID, targetPath, outputFilename, ifExists)
         }
 
         subcommandFinished = true

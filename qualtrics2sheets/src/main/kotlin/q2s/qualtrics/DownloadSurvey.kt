@@ -18,6 +18,7 @@ import kotlinx.serialization.json.jsonPrimitive
 import logging.KotlinLogging
 import q2s.util.FileExistsStrategy
 import q2s.util.unzip
+import q2s.util.unzipAndRename
 import java.io.InputStream
 import java.nio.file.Path
 
@@ -59,6 +60,7 @@ suspend fun downloadSurvey(
     apiToken: String,
     surveyID: String,
     targetDirectory: Path,
+    outputFilename: String?,
     fileExistsStrategy: FileExistsStrategy
 ) {
     val client = HttpClient(Java)
@@ -96,7 +98,7 @@ suspend fun downloadSurvey(
         throw QualtricsException("Qualtrics export complete but fileId is null")
     }
 
-    downloadExport(client, urls, apiToken, surveyID, fileID, targetDirectory, fileExistsStrategy)
+    downloadExport(client, urls, apiToken, surveyID, fileID, targetDirectory, outputFilename, fileExistsStrategy)
 }
 
 suspend fun downloadExport(
@@ -106,6 +108,7 @@ suspend fun downloadExport(
     surveyID: String,
     fileID: String,
     targetDirectory: Path,
+    outputFilename: String?,
     fileExistsStrategy: FileExistsStrategy
 ) {
     logger.debug { "downloading result from ${urls.getExportFile(surveyID, fileID)}" }
@@ -118,6 +121,11 @@ suspend fun downloadExport(
     }
     val content = downloadResponse.receive<InputStream>()
 
-    logger.debug { "unzipping $surveyID export to $targetDirectory" }
-    unzip(content, targetDirectory, fileExistsStrategy)
+    if (outputFilename == null) {
+        logger.debug { "unzipping $surveyID export to $targetDirectory" }
+        unzip(content, targetDirectory, fileExistsStrategy)
+    } else {
+        logger.debug { "unzipping $surveyID export as $outputFilename to $targetDirectory" }
+        unzipAndRename(content, targetDirectory, outputFilename, fileExistsStrategy)
+    }
 }

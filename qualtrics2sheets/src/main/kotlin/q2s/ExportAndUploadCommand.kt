@@ -56,6 +56,11 @@ class ExportAndUploadCommand : Subcommand("run", "download a Qualtrics export an
         fullName = "export-path",
         description = "if specified, the Qualtrics CSV will be extracted to the given directory. Otherwise, a temporary file system directory is used."
     )
+    val outputFilename by option(
+        ArgType.String,
+        fullName = "filename",
+        description = "filename to use for the extracted CSV"
+    )
     val ifExists by option(
         ArgType.Choice<FileExistsStrategy>(),
         fullName = "if-exists",
@@ -94,7 +99,7 @@ class ExportAndUploadCommand : Subcommand("run", "download a Qualtrics export an
 
         runBlocking {
             checkApiToken(QualtricsDatacenter(datacenter), apiToken)
-            downloadSurvey(QualtricsDatacenter(datacenter), apiToken, surveyID, tmpDirectory, FileExistsStrategy.ABORT)
+            downloadSurvey(QualtricsDatacenter(datacenter), apiToken, surveyID, tmpDirectory, outputFilename, FileExistsStrategy.ABORT)
         }
 
         var csvFile: Path? = null
