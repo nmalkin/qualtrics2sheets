@@ -17,7 +17,7 @@ repositories {
 dependencies {
     // JUnit
     testImplementation(kotlin("test-junit5"))
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.1")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.2")
 }
 
 java {
@@ -34,7 +34,7 @@ tasks.test {
 
 
 ktlint {
-    version.set("0.43.2")
+    version.set("0.49.0")
 
     filter {
         exclude("build/**")
